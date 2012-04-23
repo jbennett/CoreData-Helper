@@ -23,8 +23,8 @@ NSString *const DataManagerDidSaveFailedNotification = @"DataManagerDidSaveFaile
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 NSString *const kDataManagerBundleName = nil;
-NSString *const kDataManagerModelName = @"TheSystem";
-NSString *const kDataManagerSQLiteName = @"TheSystem";
+NSString *const kDataManagerModelName = @"Achievements";
+NSString *const kDataManagerSQLiteName = @"Achievements";
 
 + (DataManager *)sharedInstance
 {
@@ -137,7 +137,9 @@ NSString *const kDataManagerSQLiteName = @"TheSystem";
 		[request setSortDescriptors:[NSArray arrayWithObject:sortdescriptor]];
 	}
 	
+	
 	NSError *error = nil;
+	NSLog(@"fetching");
 	NSMutableArray *mutableFetchResults = [[self.mainObjectContext executeFetchRequest:request error:&error] mutableCopy];
 	
 	if (mutableFetchResults == nil)
@@ -212,8 +214,6 @@ NSString *const kDataManagerSQLiteName = @"TheSystem";
 		NSError *error;
 		NSDictionary *attr = [NSDictionary dictionaryWithObject:NSFileProtectionComplete
 														 forKey:NSFileProtectionKey];
-		
-		NSLog(@"%@", SharedDocumentsPath);
 		
 		[manager createDirectoryAtPath:SharedDocumentsPath
 		   withIntermediateDirectories:YES

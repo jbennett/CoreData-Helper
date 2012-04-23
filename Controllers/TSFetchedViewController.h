@@ -15,8 +15,10 @@
 @property (strong, nonatomic) NSString *sortField;
 @property (strong, nonatomic) NSString *searchField;
 @property (strong, nonatomic) NSString *sectionKeyPath;
+@property (strong, nonatomic) NSPredicate *filter;
 @property (strong, nonatomic) NSString *cellIdentifier;
 @property (strong, nonatomic) NSString *cache;
+@property (assign, nonatomic) BOOL showIndex;
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSFetchedResultsController *searchFetchedResultsController;

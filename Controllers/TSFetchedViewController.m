@@ -16,6 +16,22 @@
 @implementation TSFetchedViewController
 @synthesize fetchedResultsController = _fetchedResultsController;
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+	if (self = [super initWithCoder:aDecoder]) {
+		self.entityName = nil;
+		self.sortField = nil;
+		self.searchField = nil;
+		self.sectionKeyPath = nil;
+		self.filter = nil;
+		self.cellIdentifier = nil;
+		self.cache = @"Root";
+		self.showIndex = YES;
+	}
+	
+	return self;
+}
+
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
@@ -38,7 +54,7 @@
 	if (_fetchedResultsController)
 		return _fetchedResultsController;
 	
-	_fetchedResultsController = [self createFetchedResultsControllerWithPredicate:nil];
+	_fetchedResultsController = [self createFetchedResultsControllerWithPredicate:self.filter];
 	return _fetchedResultsController;
 }
 
@@ -146,6 +162,9 @@
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
+	if (!self.showIndex || !self.sectionKeyPath)
+		return nil;
+	
 	return [[self fetchedResultsControllerForTableView:tableView] sectionIndexTitles];
 }
 
@@ -199,7 +218,6 @@
 	if (search && search.length) {
 		[NSFetchedResultsController deleteCacheWithName:self.cache];
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K contains[cd] %@", self.searchField, search];
-		NSLog(@"%@", predicate);
 		[self.searchFetchedResultsController.fetchRequest setPredicate:predicate];
 	}
 	
